@@ -8,13 +8,13 @@
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=MedievalSharp&display=swap" rel="stylesheet">
   <style>
     body {
-      background-image: url('https://imgcdn.stablediffusionweb.com/2024/11/7/7f569c96-947e-4d0a-9929-56f754d57621.jpg');
+      background-image: url('https://as2.ftcdn.net/v2/jpg/14/38/73/49/1000_F_1438734968_sItcnpZJXueGMEZ4CkxCMXHRO2qQr6A0.jpg');
       background-size: cover;
       background-attachment: fixed;
       font-family: 'MedievalSharp', cursive;
     }
     .parchment {
-      background-image: url('https://images.stockcake.com/public/c/f/0/cf00f55e-7bac-4598-bbae-e84af2c0245f_large/aged-parchment-texture-stockcake.jpg');
+      background-image: url('https://images.stockcake.com/public/4/c/a/4ca5e840-7cd0-4909-b003-b435b1250aab_large/aged-parchment-texture-stockcake.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -27,10 +27,20 @@
       font-family: 'UnifrakturCook', cursive;
     }
     .section {
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 255, 0.85);
       border: 2px solid #a47149;
       border-radius: 0.5rem;
       padding: 1rem;
+    }
+    .label {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .value-box {
+      padding: 0.5rem 0.75rem;
+      background-color: #fef3c7;
+      border-radius: 0.375rem;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -44,87 +54,53 @@
     <!-- Countdown Counters -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div class="section">
-        <label class="block font-bold mb-2">Mind</label>
-        <input id="counter1" type="number" class="w-full p-2 rounded text-black" />
+        <div class="label">Mind</div>
+        <div class="value-box text-center text-2xl text-red-700">11</div>
       </div>
       <div class="section">
-        <label class="block font-bold mb-2">Body</label>
-        <input id="counter2" type="number" class="w-full p-2 rounded text-black" />
+        <div class="label">Body</div>
+        <div class="value-box text-center text-2xl text-green-700">8</div>
       </div>
       <div class="section">
-        <label class="block font-bold mb-2">Soul</label>
-        <input id="counter3" type="number" class="w-full p-2 rounded text-black" />
+        <div class="label">Soul</div>
+        <div class="value-box text-center text-2xl text-purple-700">19</div>
       </div>
     </div>
 
     <!-- DM Fear Tracker -->
     <div class="section">
-      <label class="block font-bold mb-2">DM Fear Level</label>
-      <input type="number" min="0" max="12" id="dmFear" class="w-full p-2 rounded text-black" />
-      <p id="dmFearDisplay" class="mt-2 text-sm font-semibold text-center">Fear Level: 0</p>
+      <div class="label">DM Fear Level</div>
+      <div class="value-box text-center text-3xl text-rose-700">7 / 12</div>
     </div>
 
     <!-- Session Notes -->
     <div class="section">
-      <label class="block font-bold mb-2">Last Session Notes</label>
-      <textarea id="sessionNotes" rows="6" class="w-full p-2 rounded text-black"></textarea>
+      <div class="label">Last Session Notes</div>
+      <div class="value-box whitespace-pre-line">
+        The party entered the ruins of Elendral and encountered a possessed archivist.  
+        They retrieved the black crystal but triggered a glyph on the exit.
+      </div>
     </div>
 
     <!-- Next Session Time -->
     <div class="section">
-      <label class="block font-bold mb-2">Next Session Date & Time</label>
-      <input type="datetime-local" id="nextSession" class="w-full p-2 rounded text-black" />
-      <p id="sessionDisplay" class="mt-2 text-sm text-center font-medium text-gray-700"></p>
+      <div class="label">Next Session</div>
+      <div class="value-box text-center text-lg">August 10, 2025 – 6:00 PM</div>
     </div>
 
     <!-- Tavern Board -->
     <div class="section">
-      <label class="block font-bold mb-2">Tavern Board (extra info)</label>
-      <textarea id="extraInfo" rows="4" class="w-full p-2 rounded text-black"></textarea>
+      <div class="label">Tavern Board</div>
+      <div class="value-box whitespace-pre-line">
+        • Wanted: Redfang the Bandit King  
+        • Potion Sale – 2 for 1 at Marla’s  
+        • Goblin Poker Night every Friday
+      </div>
     </div>
 
     <footer class="text-center text-sm text-gray-700 pt-4">
       🪑 Owned & operated by the Doors Family – All drinks half off on session nights!
     </footer>
   </div>
-
-  <script>
-    // Fields to store
-    const fields = ['counter1', 'counter2', 'counter3', 'sessionNotes', 'extraInfo', 'nextSession', 'dmFear'];
-    fields.forEach(id => {
-      const el = document.getElementById(id);
-      const val = localStorage.getItem(id);
-      if (val !== null) el.value = val;
-      el.addEventListener('input', () => {
-        localStorage.setItem(id, el.value);
-        if (id === 'dmFear') updateFearStyle(el.value);
-        if (id === 'nextSession') updateDisplay();
-      });
-    });
-
-    // Update Next Session Display
-    const sessionInput = document.getElementById('nextSession');
-    const display = document.getElementById('sessionDisplay');
-    function updateDisplay() {
-      const val = sessionInput.value;
-      display.textContent = val ? `Next session: ${new Date(val).toLocaleString()}` : '';
-    }
-    updateDisplay();
-
-    // Update DM Fear Display with color tiers
-    const dmFear = document.getElementById('dmFear');
-    const fearDisplay = document.getElementById('dmFearDisplay');
-    function updateFearStyle(value) {
-      fearDisplay.textContent = `Fear Level: ${value}`;
-      const level = parseInt(value, 10);
-      const colors = [
-        "#d0f0c0", "#d4edb4", "#e9e67c", "#ffdd57",
-        "#f6c177", "#f4a261", "#e76f51", "#ef4444",
-        "#dc2626", "#b91c1c", "#991b1b", "#7f1d1d", "#4c0519"
-      ];
-      fearDisplay.style.color = colors[level] || "#000";
-    }
-    updateFearStyle(dmFear.value || 0);
-  </script>
 </body>
 </html>
