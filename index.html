@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,13 +8,13 @@
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=MedievalSharp&display=swap" rel="stylesheet">
   <style>
     body {
-      background-image: url('https://i.imgur.com/4UeFklP.jpg'); /* Wood background */
+      background-image: url('https://i.imgur.com/4UeFklP.jpg'); /* Wood texture */
       background-size: cover;
       background-attachment: fixed;
       font-family: 'MedievalSharp', cursive;
     }
     .parchment {
-      background-image: url('https://i.imgur.com/qIufhof.png'); /* Parchment paper */
+      background-image: url('https://i.imgur.com/qIufhof.png'); /* Parchment texture */
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -30,6 +30,12 @@
 <body class="min-h-screen flex items-center justify-center p-6">
   <div class="parchment max-w-4xl w-full space-y-6 text-gray-800">
 
+    <!-- Edit Mode Toggle (DM only) -->
+    <div class="text-right">
+      <button id="toggleEdit" class="text-xs text-blue-500 hover:underline">Toggle Edit Mode</button>
+    </div>
+
+    <!-- Header -->
     <h1 class="text-5xl text-center title-font">🍺 Swinging Doors Tavern</h1>
     <h2 class="text-xl text-center italic">Adventurers' Dashboard</h2>
 
@@ -37,35 +43,42 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div>
         <label class="block font-bold mb-2">Main Quest Countdown</label>
-        <input id="counter1" type="number" class="w-full p-2 rounded text-black" />
+        <input id="counter1" type="number" class="w-full p-2 rounded text-black edit-only" />
       </div>
       <div>
         <label class="block font-bold mb-2">Side Quest Countdown</label>
-        <input id="counter2" type="number" class="w-full p-2 rounded text-black" />
+        <input id="counter2" type="number" class="w-full p-2 rounded text-black edit-only" />
       </div>
       <div>
         <label class="block font-bold mb-2">Custom Countdown</label>
-        <input id="counter3" type="number" class="w-full p-2 rounded text-black" />
+        <input id="counter3" type="number" class="w-full p-2 rounded text-black edit-only" />
       </div>
+    </div>
+
+    <!-- DM Fear Tracker -->
+    <div>
+      <label class="block font-bold mb-2">DM Fear Level</label>
+      <input type="range" min="0" max="10" id="dmFear" class="w-full edit-only" />
+      <p id="dmFearDisplay" class="mt-2 text-sm">Fear Level: 0</p>
     </div>
 
     <!-- Session Notes -->
     <div>
       <label class="block font-bold mb-2">Last Session Notes</label>
-      <textarea id="sessionNotes" rows="6" class="w-full p-2 rounded text-black"></textarea>
+      <textarea id="sessionNotes" rows="6" class="w-full p-2 rounded text-black edit-only"></textarea>
     </div>
 
     <!-- Next Session Time -->
     <div>
       <label class="block font-bold mb-2">Next Session Date & Time</label>
-      <input type="datetime-local" id="nextSession" class="w-full p-2 rounded text-black" />
+      <input type="datetime-local" id="nextSession" class="w-full p-2 rounded text-black edit-only" />
       <p id="sessionDisplay" class="mt-2 text-sm text-gray-700"></p>
     </div>
 
-    <!-- Other Info -->
+    <!-- Tavern Board -->
     <div>
       <label class="block font-bold mb-2">Tavern Board (extra info)</label>
-      <textarea id="extraInfo" rows="4" class="w-full p-2 rounded text-black"></textarea>
+      <textarea id="extraInfo" rows="4" class="w-full p-2 rounded text-black edit-only"></textarea>
     </div>
 
     <footer class="text-center text-sm text-gray-700 pt-4">
@@ -74,26 +87,39 @@
   </div>
 
   <script>
-    const fields = ['counter1', 'counter2', 'counter3', 'sessionNotes', 'extraInfo'];
+    // Editable Fields
+    const fields = ['counter1', 'counter2', 'counter3', 'sessionNotes', 'extraInfo', 'nextSession', 'dmFear'];
     fields.forEach(id => {
       const el = document.getElementById(id);
-      el.value = localStorage.getItem(id) || '';
+      const val = localStorage.getItem(id);
+      if (val !== null) el.value = val;
       el.addEventListener('input', () => localStorage.setItem(id, el.value));
     });
 
+    // Session time display
     const sessionInput = document.getElementById('nextSession');
     const display = document.getElementById('sessionDisplay');
-    sessionInput.value = localStorage.getItem('nextSession') || '';
-    updateDisplay();
-    sessionInput.addEventListener('change', () => {
-      localStorage.setItem('nextSession', sessionInput.value);
-      updateDisplay();
-    });
-
     function updateDisplay() {
       const val = sessionInput.value;
       display.textContent = val ? `Next session: ${new Date(val).toLocaleString()}` : '';
     }
-  </script>
-</body>
-</html>
+    sessionInput.addEventListener('change', updateDisplay);
+    updateDisplay();
+
+    // DM Fear Tracker color feedback
+    const dmFear = document.getElementById('dmFear');
+    const fearDisplay = document.getElementById('dmFearDisplay');
+    dmFear.addEventListener('input', () => {
+      localStorage.setItem('dmFear', dmFear.value);
+      updateFearStyle(dmFear.value);
+    });
+    updateFearStyle(dmFear.value);
+
+    function updateFearStyle(value) {
+      fearDisplay.textContent = `Fear Level: ${value}`;
+      const colors = ["#d0f0c0", "#ffec99", "#f6c177", "#e76f51", "#d62828"];
+      const level = Math.floor(value / 2);
+      dmFear.style.accentColor = colors[level] || "#fff";
+    }
+
+    // 🔐 Ed
