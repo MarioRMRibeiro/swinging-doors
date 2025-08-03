@@ -3,48 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>D&D Dashboard</title>
+  <title>Swinging Doors Tavern Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=MedievalSharp&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://i.imgur.com/4UeFklP.jpg'); /* Wood background */
+      background-size: cover;
+      background-attachment: fixed;
+      font-family: 'MedievalSharp', cursive;
+    }
+    .parchment {
+      background-image: url('https://i.imgur.com/qIufhof.png'); /* Parchment paper */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    .title-font {
+      font-family: 'UnifrakturCook', cursive;
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
-  <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-3xl w-full space-y-6">
+<body class="min-h-screen flex items-center justify-center p-6">
+  <div class="parchment max-w-4xl w-full space-y-6 text-gray-800">
 
-    <h1 class="text-3xl font-bold text-center">🧙 D&D Campaign Dashboard</h1>
+    <h1 class="text-5xl text-center title-font">🍺 Swinging Doors Tavern</h1>
+    <h2 class="text-xl text-center italic">Adventurers' Dashboard</h2>
 
     <!-- Countdown Counters -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div>
-        <label class="block font-semibold mb-2">Main Quest Countdown</label>
+        <label class="block font-bold mb-2">Main Quest Countdown</label>
         <input id="counter1" type="number" class="w-full p-2 rounded text-black" />
       </div>
       <div>
-        <label class="block font-semibold mb-2">Side Quest Countdown</label>
+        <label class="block font-bold mb-2">Side Quest Countdown</label>
         <input id="counter2" type="number" class="w-full p-2 rounded text-black" />
       </div>
       <div>
-        <label class="block font-semibold mb-2">Custom Countdown</label>
+        <label class="block font-bold mb-2">Custom Countdown</label>
         <input id="counter3" type="number" class="w-full p-2 rounded text-black" />
       </div>
     </div>
 
     <!-- Session Notes -->
     <div>
-      <label class="block font-semibold mb-2">Last Session Notes</label>
+      <label class="block font-bold mb-2">Last Session Notes</label>
       <textarea id="sessionNotes" rows="6" class="w-full p-2 rounded text-black"></textarea>
     </div>
 
     <!-- Next Session Time -->
     <div>
-      <label class="block font-semibold mb-2">Next Session Date & Time</label>
+      <label class="block font-bold mb-2">Next Session Date & Time</label>
       <input type="datetime-local" id="nextSession" class="w-full p-2 rounded text-black" />
-      <p id="sessionDisplay" class="mt-2 text-sm text-gray-300"></p>
+      <p id="sessionDisplay" class="mt-2 text-sm text-gray-700"></p>
     </div>
 
     <!-- Other Info -->
     <div>
-      <label class="block font-semibold mb-2">Extra Info (map links, NPCs, etc.)</label>
+      <label class="block font-bold mb-2">Tavern Board (extra info)</label>
       <textarea id="extraInfo" rows="4" class="w-full p-2 rounded text-black"></textarea>
     </div>
+
+    <footer class="text-center text-sm text-gray-700 pt-4">
+      🪑 Owned & operated by the Doors Family – All drinks half off on session nights!
+    </footer>
   </div>
 
   <script>
