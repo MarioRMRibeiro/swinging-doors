@@ -14,7 +14,7 @@
       font-family: 'MedievalSharp', cursive;
     }
     .parchment {
-      background-image: url('https://images.stockcake.com/public/c/f/0/cf00f55e-7bac-4598-bbae-e84af2c0245f_large/aged-parchment-texture-stockcake.jpg');
+      background-image: url('https://images.stockcake.com/public/4/c/a/4ca5e840-7cd0-4909-b003-b435b1250aab_large/aged-parchment-texture-stockcake.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -45,14 +45,14 @@
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
-  <div class="parchment max-w-4xl w-full space-y-6 text-gray-800">
+  <div class="parchment max-w-6xl w-full space-y-6 text-gray-800">
 
     <!-- Header -->
     <h1 class="text-5xl text-center title-font">🍺 Swinging Doors Tavern</h1>
     <h2 class="text-xl text-center italic">Adventurers' Dashboard</h2>
 
-    <!-- Countdown Counters -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <!-- Countdown & Fear Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
       <div class="section">
         <div class="label">Mind</div>
         <div class="value-box text-center text-2xl text-red-700">11</div>
@@ -65,41 +65,35 @@
         <div class="label">Soul</div>
         <div class="value-box text-center text-2xl text-purple-700">19</div>
       </div>
-    </div>
-
-    <!-- DM Fear Tracker -->
-    <div class="section">
-      <div class="label">DM Fear Level</div>
-      <div class="value-box text-center text-3xl text-rose-700">5 / 12</div>
-    </div>
-
-    <!-- Session Notes -->
-    <div class="section">
-      <div class="label">Last Session Notes</div>
-      <div class="value-box whitespace-pre-line">
-        The party entered the ruins of Elendral and encountered a possessed archivist.  
-        They retrieved the black crystal but triggered a glyph on the exit.
+      <div class="section">
+        <div class="label">DM Fear Level</div>
+        <div class="value-box text-center text-2xl text-rose-700">5 / 12</div>
       </div>
     </div>
 
-    <!-- Next Session Time -->
-    <div class="section">
+    <!-- Session Info and Tavern Board -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="section">
+        <div class="label">Last Session Notes</div>
+        <div class="value-box whitespace-pre-line text-sm leading-relaxed">
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="label">Tavern Board</div>
+        <div class="value-box whitespace-pre-line text-sm leading-relaxed">
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Session -->
+    <div class="section text-center">
       <div class="label">Next Session</div>
-      <div class="value-box text-center text-lg">TBD</div>
-    </div>
-
-    <!-- Tavern Board -->
-    <div class="section">
-      <div class="label">Tavern Board</div>
-      <div class="value-box whitespace-pre-line">
-        • Wanted: Redfang the Bandit King  
-        • Potion Sale – 2 for 1 at Marla’s  
-        • Goblin Poker Night every Friday
-      </div>
+      <div class="value-box text-lg">TBD</div>
     </div>
 
     <footer class="text-center text-sm text-gray-700 pt-4">
-      🪑 Owned & operated by the Swinging Doors
+      🪑 Owned & operated by the SD
     </footer>
   </div>
 </body>
