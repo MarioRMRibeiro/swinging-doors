@@ -27,21 +27,23 @@
       font-family: 'UnifrakturCook', cursive;
     }
     .section {
-      background-color: rgba(255, 255, 255, 0.85);
-      border: 2px solid #a47149;
-      border-radius: 0.5rem;
-      padding: 1rem;
-    }
+	  border: 2px solid #a47149;
+	  border-radius: 0.5rem;
+	  padding: 1rem;
+	  background-color: transparent;
+	}
     .label {
       font-weight: bold;
       margin-bottom: 0.5rem;
     }
     .value-box {
-      padding: 0.5rem 0.75rem;
-      background-color: #fef3c7;
-      border-radius: 0.375rem;
-      font-weight: bold;
-    }
+	  padding: 0.5rem 0.75rem;
+	  border-radius: 0.375rem;
+	  font-weight: bold;
+	  background-color: transparent;
+	  color: #3b2f2f; /* warm dark brown */
+	  text-shadow: 0.5px 0.5px #e3d5b8; /* parchment ink feel */
+	}
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
@@ -50,6 +52,14 @@
     <!-- Header -->
     <h1 class="text-5xl text-center title-font">🍺 Swinging Doors Tavern</h1>
     <h2 class="text-xl text-center italic">Adventurers' Dashboard</h2>
+	
+	<!--Real paper-->
+	<div class="parchment relative">
+	  <div class="absolute inset-0 bg-[#fef8e0]/80 z-0 rounded-lg pointer-events-none"></div>
+	  <div class="relative z-10 space-y-6">
+		<!-- ALL your content goes here inside this nested div -->
+	  </div>
+	</div>
 
     <!-- Countdown & Fear Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
