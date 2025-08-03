@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,32 +8,34 @@
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=MedievalSharp&display=swap" rel="stylesheet">
   <style>
     body {
-      background-image: url('https://as2.ftcdn.net/v2/jpg/14/38/73/49/1000_F_1438734968_sItcnpZJXueGMEZ4CkxCMXHRO2qQr6A0.jpg'); /* Wood texture */
+      background-image: url('https://imgcdn.stablediffusionweb.com/2024/11/7/7f569c96-947e-4d0a-9929-56f754d57621.jpg');
       background-size: cover;
       background-attachment: fixed;
       font-family: 'MedievalSharp', cursive;
     }
     .parchment {
-      background-image: url('https://images.stockcake.com/public/4/c/a/4ca5e840-7cd0-4909-b003-b435b1250aab_large/aged-parchment-texture-stockcake.jpg'); /* Parchment texture */
+      background-image: url('https://images.stockcake.com/public/c/f/0/cf00f55e-7bac-4598-bbae-e84af2c0245f_large/aged-parchment-texture-stockcake.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
       padding: 2rem;
       border-radius: 1rem;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      border: 4px solid #c89f68;
     }
     .title-font {
       font-family: 'UnifrakturCook', cursive;
+    }
+    .section {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 2px solid #a47149;
+      border-radius: 0.5rem;
+      padding: 1rem;
     }
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
   <div class="parchment max-w-4xl w-full space-y-6 text-gray-800">
-
-    <!-- Edit Mode Toggle (DM only) -->
-    <div class="text-right">
-      <button id="toggleEdit" class="text-xs text-blue-500 hover:underline">Toggle Edit Mode</button>
-    </div>
 
     <!-- Header -->
     <h1 class="text-5xl text-center title-font">🍺 Swinging Doors Tavern</h1>
@@ -41,44 +43,44 @@
 
     <!-- Countdown Counters -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div>
-        <label class="block font-bold mb-2">Main Quest Countdown</label>
-        <input id="counter1" type="number" class="w-full p-2 rounded text-black edit-only" />
+      <div class="section">
+        <label class="block font-bold mb-2">Mind</label>
+        <input id="counter1" type="number" class="w-full p-2 rounded text-black" />
       </div>
-      <div>
-        <label class="block font-bold mb-2">Side Quest Countdown</label>
-        <input id="counter2" type="number" class="w-full p-2 rounded text-black edit-only" />
+      <div class="section">
+        <label class="block font-bold mb-2">Body</label>
+        <input id="counter2" type="number" class="w-full p-2 rounded text-black" />
       </div>
-      <div>
-        <label class="block font-bold mb-2">Custom Countdown</label>
-        <input id="counter3" type="number" class="w-full p-2 rounded text-black edit-only" />
+      <div class="section">
+        <label class="block font-bold mb-2">Soul</label>
+        <input id="counter3" type="number" class="w-full p-2 rounded text-black" />
       </div>
     </div>
 
     <!-- DM Fear Tracker -->
-    <div>
+    <div class="section">
       <label class="block font-bold mb-2">DM Fear Level</label>
-      <input type="range" min="0" max="10" id="dmFear" class="w-full edit-only" />
-      <p id="dmFearDisplay" class="mt-2 text-sm">Fear Level: 0</p>
+      <input type="number" min="0" max="12" id="dmFear" class="w-full p-2 rounded text-black" />
+      <p id="dmFearDisplay" class="mt-2 text-sm font-semibold text-center">Fear Level: 0</p>
     </div>
 
     <!-- Session Notes -->
-    <div>
+    <div class="section">
       <label class="block font-bold mb-2">Last Session Notes</label>
-      <textarea id="sessionNotes" rows="6" class="w-full p-2 rounded text-black edit-only"></textarea>
+      <textarea id="sessionNotes" rows="6" class="w-full p-2 rounded text-black"></textarea>
     </div>
 
     <!-- Next Session Time -->
-    <div>
+    <div class="section">
       <label class="block font-bold mb-2">Next Session Date & Time</label>
-      <input type="datetime-local" id="nextSession" class="w-full p-2 rounded text-black edit-only" />
-      <p id="sessionDisplay" class="mt-2 text-sm text-gray-700"></p>
+      <input type="datetime-local" id="nextSession" class="w-full p-2 rounded text-black" />
+      <p id="sessionDisplay" class="mt-2 text-sm text-center font-medium text-gray-700"></p>
     </div>
 
     <!-- Tavern Board -->
-    <div>
+    <div class="section">
       <label class="block font-bold mb-2">Tavern Board (extra info)</label>
-      <textarea id="extraInfo" rows="4" class="w-full p-2 rounded text-black edit-only"></textarea>
+      <textarea id="extraInfo" rows="4" class="w-full p-2 rounded text-black"></textarea>
     </div>
 
     <footer class="text-center text-sm text-gray-700 pt-4">
@@ -87,39 +89,42 @@
   </div>
 
   <script>
-    // Editable Fields
+    // Fields to store
     const fields = ['counter1', 'counter2', 'counter3', 'sessionNotes', 'extraInfo', 'nextSession', 'dmFear'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       const val = localStorage.getItem(id);
       if (val !== null) el.value = val;
-      el.addEventListener('input', () => localStorage.setItem(id, el.value));
+      el.addEventListener('input', () => {
+        localStorage.setItem(id, el.value);
+        if (id === 'dmFear') updateFearStyle(el.value);
+        if (id === 'nextSession') updateDisplay();
+      });
     });
 
-    // Session time display
+    // Update Next Session Display
     const sessionInput = document.getElementById('nextSession');
     const display = document.getElementById('sessionDisplay');
     function updateDisplay() {
       const val = sessionInput.value;
       display.textContent = val ? `Next session: ${new Date(val).toLocaleString()}` : '';
     }
-    sessionInput.addEventListener('change', updateDisplay);
     updateDisplay();
 
-    // DM Fear Tracker color feedback
+    // Update DM Fear Display with color tiers
     const dmFear = document.getElementById('dmFear');
     const fearDisplay = document.getElementById('dmFearDisplay');
-    dmFear.addEventListener('input', () => {
-      localStorage.setItem('dmFear', dmFear.value);
-      updateFearStyle(dmFear.value);
-    });
-    updateFearStyle(dmFear.value);
-
     function updateFearStyle(value) {
       fearDisplay.textContent = `Fear Level: ${value}`;
-      const colors = ["#d0f0c0", "#ffec99", "#f6c177", "#e76f51", "#d62828"];
-      const level = Math.floor(value / 2);
-      dmFear.style.accentColor = colors[level] || "#fff";
+      const level = parseInt(value, 10);
+      const colors = [
+        "#d0f0c0", "#d4edb4", "#e9e67c", "#ffdd57",
+        "#f6c177", "#f4a261", "#e76f51", "#ef4444",
+        "#dc2626", "#b91c1c", "#991b1b", "#7f1d1d", "#4c0519"
+      ];
+      fearDisplay.style.color = colors[level] || "#000";
     }
-
-    // 🔐 Ed
+    updateFearStyle(dmFear.value || 0);
+  </script>
+</body>
+</html>
